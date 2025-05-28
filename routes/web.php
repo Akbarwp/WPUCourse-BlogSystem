@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BlogController::class, 'index'])->name('index');
+Route::get('/posts', [BlogController::class, 'post'])->name('blog');
+Route::get('/about', [BlogController::class, 'about'])->name('about');
+Route::get('/contact', [BlogController::class, 'contact'])->name('contact');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

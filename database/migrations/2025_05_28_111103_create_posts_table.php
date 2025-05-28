@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('body');
-            $table->string('cover_image');
-            $table->foreignId('user_id')->constrained('users');
+            $table->string('cover_image')->nullable();
+            $table->foreignId('author_id')->constrained('users');
             $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();
         });

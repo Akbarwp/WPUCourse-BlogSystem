@@ -15,17 +15,17 @@ class CategorySeeder extends Seeder
     {
         Category::create([
             'name' => 'UI/UX',
-            'color' => '#9EBC8A',
+            'color' => 'bg-emerald-100',
         ]);
 
         Category::create([
             'name' => 'Web Development',
-            'color' => '#90D1CA',
+            'color' => 'bg-sky-100',
         ]);
 
         Category::create([
             'name' => 'Data Science',
-            'color' => '#9B7EBD',
+            'color' => 'bg-violet-100',
         ]);
 
         // Category::factory(7)->create();

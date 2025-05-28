@@ -6,10 +6,14 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source "../views";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @theme {
     --font-sans: Figtree, ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
+    --font-plus-jakarta: "Plus Jakarta Sans";
+    --font-space-grotesk: "Space Grotesk";
 }
 
 @layer base {
@@ -20,6 +24,4 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentcolor);
     }
-
-    @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 }

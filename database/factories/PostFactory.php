@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +21,9 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence(rand(7, 11)),
             'body' => fake()->paragraph(rand(4, 7), false),
-            'cover_image' => "https://source.unsplash.com/random/500×500/?code,art,laravel",
+            'cover_image' => null,
+            'author_id' => User::factory(),
+            'category_id' => Category::factory(),
         ];
     }
 }

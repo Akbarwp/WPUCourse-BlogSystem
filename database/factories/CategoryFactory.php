@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->sentence(rand(1,3)),
-            'color' => fake()->hexColor(),
+            'color' => 'bg-'.fake()->safeColorName().'-100',
         ];
     }
 }

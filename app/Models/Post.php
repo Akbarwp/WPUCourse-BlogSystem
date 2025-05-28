@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -21,20 +22,20 @@ class Post extends Model
         'slug',
         'body',
         'cover_image',
-        'user_id',
+        'author_id',
         'category_id',
     ];
 
-    protected $with = ['user', 'category'];
+    protected $with = ['author', 'category'];
 
-    public function user()
+    public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'post_id');
+        return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'post_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     #[Scope]
@@ -60,7 +61,7 @@ class Post extends Model
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom('title')
             ->saveSlugsTo('slug')
             ->allowDuplicateSlugs()
             ->usingSeparator('-');
