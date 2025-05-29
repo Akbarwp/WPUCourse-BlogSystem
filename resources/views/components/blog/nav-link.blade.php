@@ -1,8 +1,6 @@
 @props(["href", "title", "icon", "current" => false, "ariaCurrent" => false])
 
 @php
-    $classes = $current ? "rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none" : "text-gray-900 hover:bg-gray-900/10 active:bg-gray-900/20";
-
     if ($current) {
         $classes = "rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none";
         $ariaCurrent = "page";

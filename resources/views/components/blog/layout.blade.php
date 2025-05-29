@@ -17,6 +17,7 @@
     <body class="font-plus-jakarta">
         <x-blog.navbar />
         {{ $slot }}
+        <x-blog.footer />
 
         <!-- Script -->
         @include('components.blog.script')

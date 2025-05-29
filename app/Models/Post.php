@@ -47,13 +47,13 @@ class Post extends Model
 
         $query->when($filters['category'] ?? false, function ($query, $category) {
             return $query->whereHas('category', function (Builder $query) use ($category) {
-                $query->where('name', $category);
+                $query->where('slug', $category);
             });
         });
 
-        $query->when($filters['user'] ?? false, function ($query, $user) {
-            return $query->whereHas('user', function (Builder $query) use ($user) {
-                $query->where('name', $user);
+        $query->when($filters['author'] ?? false, function ($query, $author) {
+            return $query->whereHas('author', function (Builder $query) use ($author) {
+                $query->where('username', $author);
             });
         });
     }

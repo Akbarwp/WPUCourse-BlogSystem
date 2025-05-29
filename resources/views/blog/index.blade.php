@@ -1,5 +1,5 @@
 <x-blog.layout :title="$title">
-    <header class="bg-white px-8">
+    <header class="bg-white px-8 h-screen">
         <div class="container mx-auto w-full pb-24 pt-12 text-center">
             <p class="text-blue-gray-900 mx-auto block w-full font-sans text-[30px] font-bold leading-[45px] antialiased lg:max-w-2xl lg:text-[48px] lg:leading-[60px]">
                 Web Development Blog @ <a href="https://github.com/Akbarwp" class="text-blue-900 transition hover:text-blue-800">AkbarWP</a>
@@ -7,7 +7,13 @@
             <p class="mx-auto mb-4 mt-8 block w-full px-8 font-sans text-xl font-normal leading-relaxed antialiased lg:w-10/12 lg:px-12 xl:w-8/12 xl:px-20">
                 Expand your web development knowledge with our tutorials and learning articles.</p>
             <div class="grid place-items-start justify-center gap-2">
-                <form action="" method="GET" enctype="multipart/form-data" class="mt-8 flex flex-col items-center justify-center gap-4 md:flex-row">
+                <form action="{{ route('blog') }}" method="GET" enctype="multipart/form-data" class="mt-8 flex flex-col items-center justify-center gap-4 md:flex-row">
+                    @if (request('category'))
+                        <input type="hidden" name="category" value="{{ request('category') }}">
+                    @endif
+                    @if (request('author'))
+                        <input type="hidden" name="author" value="{{ request('author') }}">
+                    @endif
                     <div class="w-80">
                         <div class="relative h-10 w-full min-w-[200px]">
                             <label class="input">

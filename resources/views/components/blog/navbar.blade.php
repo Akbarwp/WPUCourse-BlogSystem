@@ -1,6 +1,6 @@
-<nav class="sticky top-0 z-50 block w-full max-w-full rounded-none border-0 border-white/80 bg-white bg-opacity-80 px-4 py-4 backdrop-blur-2xl backdrop-saturate-200" x-data="{ isOpen: false }">
+<nav id="navbar" class="top-0 z-50 block w-full max-w-full rounded-none border-0 border-white/80 px-4 py-4 transition {{ request()->is('posts/*') ? 'fixed bg-transparent' : 'sticky bg-white/80 backdrop-blur-2xl backdrop-saturate-200' }}" x-data="{ isOpen: false }">
     <div class="container mx-auto flex items-center justify-between">
-        <a class="m-0 block whitespace-nowrap px-8 py-6 text-sm text-gray-900" href="{{ route("index") }}">
+        <a class="m-0 block whitespace-nowrap text-sm text-gray-900" href="{{ route("index") }}">
             <img src="{{ asset("img/logo.png") }}" class="ease-nav-brand inline w-16 rounded-lg transition-all duration-200" alt="main_logo" />
             <span class="ease-nav-brand font-space-grotesk ml-2 font-bold transition-all duration-200">AkbarWP Blog</span>
         </a>
@@ -11,12 +11,39 @@
             <x-blog.nav-link :href="route('contact')" title="Contact" icon="ri-contacts-book-line" :current="request()->routeIs('contact')" />
         </ul>
         <div class="hidden items-center gap-2 lg:flex">
-            <a href="{{ route("login") }}" class="rounded-lg px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                Login
-            </a>
-            <a href="{{ route("register") }}" class="rounded-lg bg-gray-900 px-6 py-3 text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                Register
-            </a>
+            @if (Auth::check())
+                <div class="dropdown dropdown-bottom dropdown-end">
+                    <div tabindex="0" role="button" class="cursor-pointer">
+                        @if (Auth::user()->avatar != null)
+                            <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                        @else
+                            <img src="https://picsum.photos/id/30/1280/901.webp" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                        @endif
+                        <span class="ml-2 font-medium">{{ Auth::user()->name }}</span>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                        <li>
+                            <a href="{{ route("dashboard") }}">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="{{ route("profile.edit") }}">Profile</a>
+                        </li>
+                        <li>
+                            <form action="{{ route("logout") }}" method="POST">
+                                @csrf
+                                <button type="submit" class="cursor-pointer" onclick="event.preventDefault(); this.closest('form').submit();">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            @else
+                <a href="{{ route("login") }}" class="rounded-lg px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                    Login
+                </a>
+                <a href="{{ route("register") }}" class="rounded-lg bg-gray-900 px-6 py-3 text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                    Register
+                </a>
+            @endif
         </div>
 
         <button @click="isOpen = !isOpen" class="relative ml-auto inline-block h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden" type="button" aaria-controls="mobile-menu" aria-expanded="false">
@@ -36,14 +63,36 @@
                 <x-blog.nav-link :href="route('about')" title="About" icon="ri-at-line" :current="request()->routeIs('about')" />
                 <x-blog.nav-link :href="route('contact')" title="Contact" icon="ri-contacts-book-line" :current="request()->routeIs('contact')" />
             </ul>
-            <div class="mb-4 mt-6 flex items-center gap-2">
-                <a href="{{ route("login") }}" class="rounded-lg px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                    Login
-                </a>
-                <a href="{{ route("register") }}" class="rounded-lg bg-gray-900 px-6 py-3 text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                    Register
-                </a>
-            </div>
+            <div class="divider"></div>
+            @if (Auth::check())
+                <ul class="flex flex-col gap-1">
+                    <div class="mb-2">
+                        @if (Auth::user()->avatar != null)
+                            <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                        @else
+                            <img src="https://picsum.photos/id/30/1280/901.webp" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                        @endif
+                        <span class="ml-2 font-medium">{{ Auth::user()->name }}</span>
+                    </div>
+                    <x-blog.nav-link :href="route('dashboard')" title="Dashboard" icon="ri-dashboard-line" />
+                    <x-blog.nav-link :href="route('profile.edit')" title="Profile" icon="ri-user-line" />
+                    <li>
+                        <form action="{{ route("logout") }}" method="POST">
+                            @csrf
+                            <x-blog.nav-link :href="route('logout')" title="Logout" icon="ri-logout-circle-line" onclick="event.preventDefault(); this.closest('form').submit();" />
+                        </form>
+                    </li>
+                </ul>
+            @else
+                <div class="mb-4 mt-6 flex items-center gap-2">
+                    <a href="{{ route("login") }}" class="rounded-lg px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                        Login
+                    </a>
+                    <a href="{{ route("register") }}" class="rounded-lg bg-gray-900 px-6 py-3 text-center align-middle text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        Register
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 </nav>
