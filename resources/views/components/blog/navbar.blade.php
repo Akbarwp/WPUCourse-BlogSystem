@@ -17,7 +17,7 @@
                         @if (Auth::user()->avatar != null)
                             <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                         @else
-                            <img src="https://picsum.photos/id/30/1280/901.webp" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                            <img src="{{ asset("img/photo-profile.jpg") }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                         @endif
                         <span class="ml-2 font-medium">{{ Auth::user()->name }}</span>
                     </div>
@@ -70,7 +70,7 @@
                         @if (Auth::user()->avatar != null)
                             <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                         @else
-                            <img src="https://picsum.photos/id/30/1280/901.webp" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                            <img src="{{ asset("img/photo-profile.jpg") }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                         @endif
                         <span class="ml-2 font-medium">{{ Auth::user()->name }}</span>
                     </div>

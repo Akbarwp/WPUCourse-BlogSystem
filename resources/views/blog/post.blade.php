@@ -39,7 +39,7 @@
                         @if ($post->cover_image != null)
                             <img alt="The key new features and changes in Tailwind CSS" loading="lazy" width="768" height="768" decoding="async" data-nimg="1" class="h-full w-full scale-110 object-cover" style="color: transparent;" src="{{ $post->cover_image }}">
                         @else
-                            <img alt="The key new features and changes in Tailwind CSS" loading="lazy" width="768" height="768" decoding="async" data-nimg="1" class="h-full w-full scale-110 object-cover" style="color: transparent;" src="https://picsum.photos/id/101/2621/1747.webp">
+                            <img alt="The key new features and changes in Tailwind CSS" loading="lazy" width="768" height="768" decoding="async" data-nimg="1" class="h-full w-full scale-110 object-cover" style="color: transparent;" src="{{ asset("img/cover-image.jpg") }}">
                         @endif
                     </div>
                     <div class="p-6">
@@ -53,10 +53,10 @@
                             {{ Str::limit($post->body, 100) }}
                         </p>
                         <div class="flex items-center gap-4">
-                            @if ($post->cover_image != null)
-                                <img src="{{ $post->avatar }}" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                            @if ($post->author->avatar != null)
+                                <img src="{{ $post->author->avatar }}" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                             @else
-                                <img src="https://picsum.photos/id/30/1280/901.webp" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
+                                <img src="{{ asset("img/photo-profile.jpg") }}" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                             @endif
                             <div>
                                 <a href="{{ route('blog') }}?author={{ $post->author->username }}" class="text-gray-900 mb-0.5 block text-sm font-medium leading-normal antialiased">

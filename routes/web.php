@@ -16,15 +16,18 @@ Route::group([
     'middleware' => ['auth', 'verified'],
 
 ], function () {
-    Route::get('/', function () {return view('dashboard');})->name('dashboard');
+    Route::group([
+        'prefix' => 'post',
 
-    Route::get('/post', [PostController::class, 'index'])->name('post');
-    Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('post.show');
-    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
-    Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
-    Route::get('/post/edit/{post:slug}', [PostController::class, 'edit'])->name('post.edit');
-    Route::put('/post/edit/{post:slug}', [PostController::class, 'update'])->name('post.update');
-    Route::delete('/post/delete', [PostController::class, 'delete'])->name('post.delete');
+    ], function() {
+        Route::get('/', [PostController::class, 'index'])->name('dashboard');
+        Route::get('/create', [PostController::class, 'create'])->name('post.create');
+        Route::post('/', [PostController::class, 'store'])->name('post.store');
+        Route::get('/{post:slug}', [PostController::class, 'show'])->name('post.show');
+        Route::get('/{post:slug}/edit', [PostController::class, 'edit'])->name('post.edit');
+        Route::put('/{post:slug}', [PostController::class, 'update'])->name('post.update');
+        Route::delete('/{post:slug}', [PostController::class, 'delete'])->name('post.delete');
+    });
 });
 
 Route::middleware('auth')->group(function () {

@@ -1,17 +1,12 @@
 <x-blog.layout :title="$title">
     @php
-        $coverImage = null;
-        if ($post->cover_image != null) {
-            $coverImage = $post->cover_image;
-        } else {
-            $coverImage = "https://picsum.photos/id/101/2621/1747.webp";
-        }
+        $coverImage = $post->cover_image != null ? $post->cover_image : asset("img/cover-image.jpg");
     @endphp
-    <div class="relative min-h-screen w-full bg-[url('{{ $coverImage }}')] bg-cover bg-no-repeat">
+    <div class="relative min-h-screen w-full bg-cover bg-no-repeat" style="background-image: url('{{ $coverImage }}')">
         <div class="absolute inset-0 h-full w-full bg-gray-900/75"></div>
         <div class="grid min-h-screen px-8">
             <div class="container relative z-10 mx-auto my-auto grid place-items-center text-center">
-                <h1 class="block text-lg sm:text-2xl md:text-3xl lg:text-5xl font-semibold leading-tight tracking-normal text-white antialiased">{{ $post->title }}</h1>
+                <h1 class="block text-lg font-semibold leading-tight tracking-normal text-white antialiased sm:text-2xl md:text-3xl lg:text-5xl">{{ $post->title }}</h1>
             </div>
         </div>
     </div>
@@ -31,4 +26,19 @@
             </p>
         </div>
     </section>
+
+    @section("script")
+        <script>
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 10) {
+                    navbar.classList.remove('bg-transparent');
+                    navbar.classList.add('bg-white/80', 'backdrop-blur-2xl', 'backdrop-saturate-200');
+                } else {
+                    navbar.classList.remove('bg-white/80', 'backdrop-blur-2xl', 'backdrop-saturate-200');
+                    navbar.classList.add('bg-transparent');
+                }
+            });
+        </script>
+    @endsection
 </x-blog.layout>

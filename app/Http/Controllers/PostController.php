@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostCreateRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::where('author_id', Auth::user()->id)->get();
+        $posts = Post::latest()->filter(request(['search', 'category']))->where('author_id', Auth::user()->id)->paginate(10)->withQueryString();
         return view('dashboard.post.index', compact('posts'));
     }
 
@@ -26,24 +27,27 @@ class PostController extends Controller
         return view('dashboard.post.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        //
+        Post::create($request->validated());
+        return to_route('dashboard')->with('success', 'Post created successfully');
     }
 
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('dashboard.post.show', compact('post', 'categories'));
+        return view('dashboard.post.edit', compact('post', 'categories'));
     }
 
-    public function update(Request $request, Post $post)
+    public function update(PostUpdateRequest $request, Post $post)
     {
-        //
+        $post->update($request->validated());
+        return to_route('dashboard')->with('success', 'Post updated successfully');
     }
 
-    public function delete(Request $request)
+    public function delete(Post $post)
     {
-        //
+        $post->delete();
+        return to_route('dashboard')->with('success', 'Post deleted successfully');
     }
 }

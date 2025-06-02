@@ -19,7 +19,6 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
-        "jquery": "^3.7.1",
         "remixicon": "^4.6.0"
     }
 }

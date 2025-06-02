@@ -21,5 +21,6 @@
 
         <!-- Script -->
         @include('components.blog.script')
+        @yield('script')
     </body>
 </html>
