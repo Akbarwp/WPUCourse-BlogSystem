@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,19 @@ Route::group([
         Route::delete('/{post:slug}', [PostController::class, 'delete'])->name('post.delete');
 
         Route::post('/uploud-cover-image', [PostController::class, 'uploudCoverImage'])->name('post.uploud-cover-image');
+    });
+
+    Route::group([
+        'prefix' => 'category',
+
+    ], function() {
+        Route::get('/', [CategoryController::class, 'index'])->name('category');
+        Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('/', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
+        Route::get('/{category:slug}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::put('/{category:slug}', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/{category:slug}', [CategoryController::class, 'delete'])->name('category.delete');
     });
 });
 

@@ -40,6 +40,19 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const alertEl = document.getElementById('alert');
+        const closeBtn = document.getElementById('closeAlert');
+        setTimeout(() => {
+            if (alertEl) {
+                alertEl.style.display = 'none';
+            }
+        }, 5000);
+
+        closeBtn.addEventListener('click', () => {
+            alertEl.style.display = 'none';
+        });
+    </script>
     @stack("script")
 </body>
 

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __("Post") }}
+            {{ __("Category") }}
         </h2>
     </x-slot>
 
@@ -16,7 +16,7 @@
                             <i class="ri-close-line cursor-pointer text-xl" id="closeAlert"></i>
                         </div>
                     @endif
-                    <x-blog.post.table :posts="$posts" />
+                    <x-blog.category.table :categories="$categories" />
                 </div>
             </div>
         </div>
