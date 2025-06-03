@@ -50,7 +50,7 @@
                             {{ $post->title }}
                         </a>
                         <p class="mb-6 block text-base font-normal leading-relaxed text-gray-500 antialiased">
-                            {{ Str::limit($post->body, 100) }}
+                            {!! Str::limit(strip_tags($post->body), 100) !!}
                         </p>
                         <div class="flex items-center gap-4">
                             <img src="{{ $post->author->avatar ? asset('storage/'.$post->author->avatar) : asset("img/photo-profile.jpg") }}" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
