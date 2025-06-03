@@ -53,11 +53,7 @@
                             {{ Str::limit($post->body, 100) }}
                         </p>
                         <div class="flex items-center gap-4">
-                            @if ($post->author->avatar != null)
-                                <img src="{{ $post->author->avatar }}" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
-                            @else
-                                <img src="{{ asset("img/photo-profile.jpg") }}" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
-                            @endif
+                            <img src="{{ $post->author->avatar ? asset('storage/'.$post->author->avatar) : asset("img/photo-profile.jpg") }}" alt="{{ $post->author->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                             <div>
                                 <a href="{{ route('blog') }}?author={{ $post->author->username }}" class="text-gray-900 mb-0.5 block text-sm font-medium leading-normal antialiased">
                                     {{ $post->author->name }}

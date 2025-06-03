@@ -1,8 +1,5 @@
 <x-blog.layout :title="$title">
-    @php
-        $coverImage = $post->cover_image != null ? $post->cover_image : asset("img/cover-image.jpg");
-    @endphp
-    <div class="relative min-h-screen w-full bg-cover bg-no-repeat" style="background-image: url('{{ $coverImage }}')">
+    <div class="relative min-h-screen w-full bg-cover bg-no-repeat" style="background-image: url('{{ $post->cover_image != null ? asset('storage/'.$post->cover_image) : asset("img/cover-image.jpg") }}')">
         <div class="absolute inset-0 h-full w-full bg-gray-900/75"></div>
         <div class="grid min-h-screen px-8">
             <div class="container relative z-10 mx-auto my-auto grid place-items-center text-center">
@@ -27,7 +24,7 @@
         </div>
     </section>
 
-    @section("script")
+    @push("script")
         <script>
             window.addEventListener('scroll', function() {
                 const navbar = document.getElementById('navbar');
@@ -40,5 +37,5 @@
                 }
             });
         </script>
-    @endsection
+    @endpush
 </x-blog.layout>

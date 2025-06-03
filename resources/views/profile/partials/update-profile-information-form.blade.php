@@ -1,3 +1,10 @@
+@push("style")
+    {{-- Filepond --}}
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+
+    {{-- Filepond Image Preview --}}
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+@endpush
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -13,7 +20,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
@@ -53,6 +60,21 @@
             @endif
         </div>
 
+        {{-- Upload Avatar --}}
+        <div>
+            <fieldset class="fieldset">
+                <x-input-label for="avatar" :value="__('Uploud Avatar')" />
+                {{-- <input type="file" id="avatar" name="avatar" class="file-input mt-1 block w-full" accept="image/png, image/jpeg, image/jpg" /> --}}
+                <input type="file" id="avatar" name="avatar" class="mt-1 block w-full" accept="image/png, image/jpeg, image/jpg" />
+                <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+            </fieldset>
+            <div class="avatar mt-2">
+                <div class="w-24 rounded-full">
+                    <img id="avatar-preview" src="{{ $user->avatar ? asset('storage/'.$user->avatar) : asset("img/photo-profile.jpg") }}" alt="{{ $user->name }}" />
+                </div>
+            </div>
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
@@ -68,3 +90,58 @@
         </div>
     </form>
 </section>
+
+@push("script")
+    {{-- Filepond Image Preview --}}
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    {{-- Filepond Image Type Validation --}}
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    {{-- Filepond Image Size Validation --}}
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    {{-- Filepond Image Resize & Transform --}}
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    {{-- Filepond --}}
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+        FilePond.registerPlugin(FilePondPluginFileValidateSize);
+        FilePond.registerPlugin(FilePondPluginImageTransform);
+        FilePond.registerPlugin(FilePondPluginImageResize);
+
+        const inputElement = document.querySelector('#avatar');
+        const pond = FilePond.create(inputElement, {
+            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+            maxFileSize: '2MB',
+            imageResizeTargetWidth: '600',
+            // imageResizeTargetHeight: '600',
+            imageResizeMode: 'contain',
+            imageResizeUpscale: false,
+            server: {
+                url: '/uploud-avatar',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }
+        });
+    </script>
+
+    {{-- Image Preview --}}
+    {{-- <script>
+        const input = document.getElementById('avatar');
+        const previewPhoto = () => {
+            const file = input.files;
+            if (file) {
+                const fileReader = new FileReader();
+                const preview = document.getElementById('avatar-preview');
+                fileReader.onload = function(event) {
+                    preview.setAttribute('src', event.target.result);
+                }
+                fileReader.readAsDataURL(file[0]);
+            }
+        }
+        input.addEventListener("change", previewPhoto);
+    </script> --}}
+@endpush

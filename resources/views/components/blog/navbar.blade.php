@@ -14,11 +14,7 @@
             @if (Auth::check())
                 <div class="dropdown dropdown-bottom dropdown-end">
                     <div tabindex="0" role="button" class="cursor-pointer">
-                        @if (Auth::user()->avatar != null)
-                            <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
-                        @else
-                            <img src="{{ asset("img/photo-profile.jpg") }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
-                        @endif
+                        <img src="{{ Auth::user()->avatar ? asset('storage/'.Auth::user()->avatar) : asset("img/photo-profile.jpg") }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                         <span class="ml-2 font-medium">{{ Auth::user()->name }}</span>
                     </div>
                     <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
@@ -67,11 +63,7 @@
             @if (Auth::check())
                 <ul class="flex flex-col gap-1">
                     <div class="mb-2">
-                        @if (Auth::user()->avatar != null)
-                            <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
-                        @else
-                            <img src="{{ asset("img/photo-profile.jpg") }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
-                        @endif
+                        <img src="{{ Auth::user()->avatar ? asset('storage/'.Auth::user()->avatar) : asset("img/photo-profile.jpg") }}" alt="{{ Auth::user()->name }}" class="relative inline-block h-9 w-9 rounded-full object-cover object-center">
                         <span class="ml-2 font-medium">{{ Auth::user()->name }}</span>
                     </div>
                     <x-blog.nav-link :href="route('dashboard')" title="Dashboard" icon="ri-dashboard-line" />

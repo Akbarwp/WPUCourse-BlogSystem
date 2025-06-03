@@ -23,8 +23,8 @@ class PostCreateRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'min:8', 'max:255', 'unique:posts'],
-            'body' => ['required', 'string'],
-            'cover_image' => ['nullable', 'file', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
+            'body' => ['required', 'string', 'min:50'],
+            // 'cover_image' => ['nullable', 'file', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
             'author_id' => ['required','exists:users,id'],
             'category_id' => ['required', 'exists:categories,id'],
         ];

@@ -6,7 +6,10 @@ use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -29,7 +32,22 @@ class PostController extends Controller
 
     public function store(PostCreateRequest $request)
     {
-        Post::create($request->validated());
+        $validated = $request->validated();
+
+        // Uploud Image with Filepond
+        if ($request->cover_image) {
+            if (!empty($post->cover_image)) {
+                Storage::disk('public')->delete($post->cover_image);
+            }
+
+            $newFilename = Str::after($request->cover_image, 'tmp/');
+
+            Storage::disk('public')->move($request->cover_image, "img/cover-image/$newFilename");
+
+            $validated['cover_image'] = "img/cover-image/$newFilename";
+        }
+
+        Post::create($validated);
         return to_route('dashboard')->with('success', 'Post created successfully');
     }
 
@@ -41,12 +59,38 @@ class PostController extends Controller
 
     public function update(PostUpdateRequest $request, Post $post)
     {
-        $post->update($request->validated());
+        $validated = $request->validated();
+
+        // Uploud Image with Filepond
+        if ($request->cover_image) {
+            if (!empty($post->cover_image)) {
+                Storage::disk('public')->delete($post->cover_image);
+            }
+
+            $newFilename = Str::after($request->cover_image, 'tmp/');
+
+            Storage::disk('public')->move($request->cover_image, "img/cover-image/$newFilename");
+
+            $validated['cover_image'] = "img/cover-image/$newFilename";
+        }
+
+        $post->update($validated);
         return to_route('dashboard')->with('success', 'Post updated successfully');
+    }
+
+    public function uploudCoverImage(Request $request)
+    {
+        if ($request->hasFile('cover_image')) {
+            $path = $request->file('cover_image')->store('tmp/', 'public');
+        }
+        return $path;
     }
 
     public function delete(Post $post)
     {
+        if (!empty($post->cover_image)) {
+            Storage::disk('public')->delete($post->cover_image);
+        }
         $post->delete();
         return to_route('dashboard')->with('success', 'Post deleted successfully');
     }

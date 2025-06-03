@@ -73,7 +73,7 @@
     </div>
 </div>
 
-@section("script")
+@push("script")
     <script>
         function confirmDelete(id) {
             Swal.fire({
@@ -92,4 +92,4 @@
             });
         }
     </script>
-@endsection
+@endpush

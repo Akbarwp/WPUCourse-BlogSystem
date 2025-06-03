@@ -27,6 +27,8 @@ Route::group([
         Route::get('/{post:slug}/edit', [PostController::class, 'edit'])->name('post.edit');
         Route::put('/{post:slug}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/{post:slug}', [PostController::class, 'delete'])->name('post.delete');
+
+        Route::post('/uploud-cover-image', [PostController::class, 'uploudCoverImage'])->name('post.uploud-cover-image');
     });
 });
 
@@ -34,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/uploud-avatar', [ProfileController::class, 'uploudAvatar'])->name('profile.uploud-avatar');
 });
 
 require __DIR__.'/auth.php';
